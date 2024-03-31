@@ -1,0 +1,96 @@
+<html>
+ <head>
+ <title>Handover</title>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+ <style>
+    /* Add some basic styling for mobile devices */
+    @font-face {
+    font-family: "Akkurat";
+    font-display: swap;
+    src: url("https://comunacantina.com.au/wp-content/uploads/et-fonts/Akkurat.ttf") format("truetype");
+    }
+    
+    body {
+    font-family: "Epilepsja Fill", sans-serif;
+    background-color: #e6e6e6;
+    }
+    @import url('https://fonts.googleapis.com/css2?family=Epilepsja+Fill&display=swap');
+    h1 {
+    margin: 0 0 20px 0;
+    color: #16394f;
+    
+    font-family: 'Epilepsja Fill', sans-serif;
+    }
+    label {
+    display: block;
+    margin-bottom: 5px;
+    color: #16394f;
+    }
+    input[type="text"],
+    select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 2px solid #ead8d8;
+    }
+    input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #c09c54;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: large;
+    font-weight: bold;
+    }
+    input[type="submit"]:hover {
+    background-color: #ead8d8;
+    }
+    .disable-dbl-tap-zoom {
+    touch-action: manipulation;
+}
+    
+ </style>
+ 
+ <head>
+  <body>
+    <h1>Handover</h1>
+    <form id="NameANDday">
+      <label for="name">Bartender Name:</label>
+      <input type="text" id="name" name="name">
+  
+      <input type="submit" value="Next">
+    </form>
+    <p><a href="help.html">How To Use</a></p>
+  
+    <script>
+        // Get the form element
+        var form = document.getElementById("NameANDday");
+  
+        // Add an event listener to the form's submit event
+        form.addEventListener("submit", function(event) {
+          // Prevent the default form submit action
+          event.preventDefault();
+  
+          // Get the value of the input field with id="fname"
+          var name = document.getElementById("name").value;
+  
+          // Get the current day of the week
+          var date = new Date();
+          var day = date.getDay();
+          var weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+          var tomorrow = weekday[(day + 1) % 7];
+  
+          // Save the value to local storage
+          localStorage.setItem("name", name);
+          localStorage.setItem("day", tomorrow);
+  
+          // Redirect to another page
+          window.location.href = "prep.html";
+        });
+      </script>
+  </body>
+  </head>
+  

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <title>Prep List</title>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+ <style>
+ /* Add some basic styling for mobile devices */
+ body {
+ font-family: "Akkurat", Arial, sans-serif;
+ margin: 0;
+ padding: 0;
+ background-color: #e6e6e6;
+ color: #16394f;
+ }
+ ul {
+ list-style: none;
+ margin: 0;
+ padding: 0;
+ }
+ li {
+ display: flex;
+ align-items: center;
+ margin-bottom: 10px;
+ }
+ .item-name {
+ flex: 1;
+ }
+ .quantity {
+ width: 30px;
+ text-align: center;
+ }
+ button {
+ width: 30px;
+ height: 30px;
+ font-size: large;
+ font-weight: bold;
+ line-height: 1;
+ padding: 0;
+ background-color: #c09c54;
+ border: none;
+ color: white;
+ margin-right: 5px; /* added margin to give buttons more space */
+ }
+ a {
+ color: #ead8d8;
+ }
+ @font-face {
+ font-family: "Akkurat";
+ font-display: swap;
+ src: url("https://comunacantina.com.au/wp-content/uploads/et-fonts/Akkurat.ttf") format("truetype");
+ }
+
+ /* added styles to make the save button cover the text */
+ #saveButton {
+ display:block; /* changed display to block */
+ width:100%;
+ height:50px; 
+ background-color:#c09c54; /* changed button color */
+ border:none; /* removed border */
+ color:white; /* changed text color */
+ padding:15px 32px; /* added padding */
+ text-align:center; /* centered text */
+ text-decoration:none; /* removed underline */
+ font-size:16px; /* changed font size */
+ margin-top:10px; /* added margin */
+ cursor:pointer; /* changed cursor to pointer */
+ }
+
+ /* added styles for page padding */
+ body > * {
+ padding-left:20px; /* added left padding */
+ padding-right:20px; /* added right padding */
+ }
+ p{
+    font-weight: bold;
+ }
+ </style>
+ </head>
+ <body>
+ <h1>How Much Do We Have Of The Item</h1>
+ <p>Input how much we have of the items:</p>
+ <ul id="prepList">
+ <!-- The list items will be added here by the script -->
+ </ul>
+ <button id="saveButton">Confirm</button>
+
+ <script>
+ // Define the list of items to prep
+var items = [
+  "Lime Juice",
+  "Lemon Juice",
+  "Cranberry Juice",
+  "Pineapple Juice",
+  "Apple Juice",
+  "Passionfruit",
+  "Mango & passion puree",
+  "Mandy & passion puree",
+  "P-apple & mez puree",
+  "Lychee & Rasp puree",
+  "Coconut Cream",
+  "Lime Slices",
+  "Lemon Slices",
+  "Mint Leaf",
+  "Mint sprig",
+  "Sangria Fruit",
+  "Sour strap",
+  "Tim-tam crumble",
+];
+
+// Get the prep list element
+var prepList = document.getElementById("prepList");
+
+// Loop through the list of items
+for (var i = 0; i < items.length; i++) {
+  // Create a new list item
+  var li = document.createElement("li");
+
+  // Create the item name element
+  var itemName = document.createElement("span");
+  itemName.className = "item-name";
+  itemName.textContent = items[i];
+
+  // Create the quantity element
+  var quantity = document.createElement("input");
+  quantity.type = "text";
+  quantity.className = "quantity";
+  quantity.value = 0;
+
+  // Append the elements to the list item
+  li.appendChild(itemName);
+  li.appendChild(quantity);
+
+  // Append the list item to the prep list
+  prepList.appendChild(li);
+}
+
+// Get the save button element
+var saveButton = document.getElementById("saveButton");
+
+// Add an event listener to the save button's click event
+saveButton.addEventListener("click", function() {
+  // Create an object to store the values of the prep list
+  var prepValues = {};
+
+  // Loop through the list of items
+  for (var i = 0; i < items.length; i++) {
+    // Get the item name and quantity elements
+    var itemNameElement = prepList.querySelectorAll(".item-name")[i];
+    var quantityElement = prepList.querySelectorAll(".quantity")[i];
+
+    // Get the item name and quantity values
+    var itemName = itemNameElement.textContent;
+    var quantity = parseInt(quantityElement.value);
+
+    // Add the item name and quantity values to the object
+    prepValues[itemName] = quantity;
+  }
+
+  // Save the object to local storage as a JSON string
+  localStorage.setItem("prepValues1", JSON.stringify(prepValues));
+  window.location.href = "prepPT2.html";
+});
+
+ </script>
+ </body>
+</html>

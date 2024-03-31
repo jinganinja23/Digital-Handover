@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <title>Prep List Comparison</title>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+ <style>
+ /* Add some basic styling for mobile devices */
+ body {
+ font-family: "Akkurat", Arial, sans-serif;
+ margin: 0;
+ padding: 0;
+ background-color: #e6e6e6;
+ color: #16394f;
+ }
+ ul {
+ list-style: none;
+ margin: 0;
+ padding: 0;
+ }
+ li {
+ display: flex;
+ align-items: center;
+ margin-bottom: 10px;
+ }
+ .item-name {
+ flex: 1;
+ }
+ .quantity {
+ width: 30px;
+ text-align: center;
+ }
+ button {
+ width: 30px;
+ height: 30px;
+ font-size: large;
+ font-weight: bold;
+ line-height: 1;
+ padding: 0;
+ background-color: #c09c54; /* changed button color */
+ border: none; /* removed border */
+ color: white; /* changed text color */
+ margin-right: 5px; /* added margin to give buttons more space */
+ }
+ p{
+    font-weight: bold;
+ }
+
+ @font-face {
+ font-family: "Akkurat";
+ font-display: swap;
+ src: url("https://comunacantina.com.au/wp-content/uploads/et-fonts/Akkurat.ttf") format("truetype");
+ }
+
+ /* added styles for the confirm button */
+ #confirmButton {
+ display:block; /* changed display to block */
+ width:100%;
+ height:50px; 
+ background-color:#c09c54; /* changed button color */
+ border:none; /* removed border */
+ color:white; /* changed text color */
+ padding:15px 32px; /* added padding */
+ text-align:center; /* centered text */
+ text-decoration:none; /* removed underline */
+ font-size:16px; /* changed font size */
+ margin-top:10px; /* added margin */
+ cursor:pointer; /* changed cursor to pointer */
+ }
+
+ /* added styles for page padding */
+ body > * {
+ padding-left:20px; /* added left padding */
+ padding-right:20px; /* added right padding */
+ }
+ </style>
+ </head>
+ <body>
+ <h1>Amount To Prep</h1>
+ <p>This is an estimated amount of prep needed, change as needed:</p>
+ <ul id="prepList">
+ <!-- The list items will be added here by the script -->
+ </ul>
+
+ <button id="confirmButton">Confirm</button>
+
+ <script>
+ // Define the minimum amounts for Friday, Saturday, and Sunday
+var weekendMinimumAmounts = {
+  "Lime Juice": 8,
+  "Lemon Juice": 6,
+  "Cranberry Juice": 5,
+  "Pineapple Juice": 5,
+  "Apple Juice": 5,
+  "Passionfruit": 3,
+  "Mango & passion puree": 5,
+  "Mandy & passion puree": 5,
+  "P-apple & mez puree": 4,
+  "Lychee & Rasp puree": 4,
+  "Coconut Cream": 4,
+  "Lime Slices": 5,
+  "Lemon Slices": 5,
+  "Mint Leaf": 8,
+  "Mint sprig": 8,
+  "Sangria Fruit": 2,
+  "Sour strap": 1,
+  "Tim-tam crumble": 1,
+};
+
+// Define the minimum amounts for the rest of the week
+var weekdayMinimumAmounts = {
+  "Lime Juice": 4,
+  "Lemon Juice": 3,
+  "Cranberry Juice": 3,
+  "Pineapple Juice": 4,
+  "Apple Juice": 4,
+  "Passionfruit": 3,
+  "Mango & passion puree": 3,
+  "Mandy & passion puree": 3,
+  "P-apple & mez puree": 4,
+  "Lychee & Rasp puree": 4,
+  "Coconut Cream": 3,
+  "Lime Slices": 3,
+  "Lemon Slices": 2,
+  "Mint Leaf": 4,
+  "Mint sprig": 4,
+  "Sangria Fruit": 2,
+  "Sour strap": 1,
+  "Tim-tam crumble": 1,
+};
+
+// Get the day of the week from local storage
+var day = localStorage.getItem("day");
+
+// Determine which list of minimum amounts to use based on the day of the week
+var minimumAmounts =
+  day === 'Friday' || day === 'Saturday' || day === 'Thursday'
+    ? weekendMinimumAmounts
+    : weekdayMinimumAmounts;
+
+// Get the prep values from local storage
+var prepValues = JSON.parse(localStorage.getItem("prepValues1"));
+
+// Get the prep list element
+var prepList = document.getElementById("prepList");
+
+// Loop through the list of items
+for (var itemName in minimumAmounts) {
+  // Create a new list item
+  var li = document.createElement("li");
+
+  // Create the item name element
+  var itemNameElement = document.createElement("span");
+  itemNameElement.className = 'item-name';
+  itemNameElement.textContent = itemName;
+
+  // Create the quantity element
+  var quantity = document.createElement("input");
+  quantity.type = 'text';
+  quantity.className = 'quantity';
+  quantity.value =
+    Math.max(0, minimumAmounts[itemName] - prepValues[itemName]);
+
+  // Append the elements to the list item
+  li.appendChild(itemNameElement);
+  li.appendChild(quantity);
+
+  // Append the list item to the prep list
+  prepList.appendChild(li);
+}
+
+document.getElementById('confirmButton').addEventListener('click', function() {
+
+  let allQuantities = document.querySelectorAll('.quantity');
+  let allItemNames = document.querySelectorAll('.item-name');
+  let newPrepValues = {};
+
+  for (let i=0; i<allQuantities.length;i++){
+    if (allQuantities[i].value >0){
+      newPrepValues[allItemNames[i].textContent] = allQuantities[i].value;
+    }
+  }
+
+  localStorage.setItem('prepValues', JSON.stringify(newPrepValues));
+  window.location.href = 'notes.html';
+});
+</script>
+</body>
+</html>

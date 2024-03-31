@@ -1,0 +1,125 @@
+
+<!DOCTYPE html>
+<html>
+ <head>
+ <title>Handover Sheet</title>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+ <style>
+ body {
+ font-family: "Akkurat", Arial, sans-serif;
+ margin: 0;
+ padding: 0;
+ background-color: #e6e6e6;
+ color: #16394f;
+ }
+ h1 {
+ text-align: center;
+ }
+ table {
+ border-collapse: collapse;
+ width: 100%;
+ }
+ th, td {
+ text-align: left;
+ padding: 8px;
+ }
+ tr:nth-child(even) {
+ background-color: #f2f2f2;
+ }
+ .bold {
+ font-weight:bold; /* added bold */
+ }
+
+ @font-face {
+ font-family: "Akkurat";
+ font-display: swap;
+ src: url("https://comunacantina.com.au/wp-content/uploads/et-fonts/Akkurat.ttf") format("truetype");
+ }
+
+ /* added styles for the home button */
+ #homeButton {
+ display:block; /* changed display to block */
+ width:100%;
+ height:50px; 
+ background-color:#c09c54; /* changed button color */
+ border:none; /* removed border */
+ color:white; /* changed text color */
+ padding:15px 32px; /* added padding */
+ text-align:center; /* centered text */
+ text-decoration:none; /* removed underline */
+ font-size: large;
+ font-weight: bold; /* changed font size */
+ margin-top:10px; /* added margin */
+ cursor:pointer; /* changed cursor to pointer */
+ }
+ </style>
+ </head>
+ <body>
+ <h1>Handover Sheet Complete</h1>
+ <table id="infoTable">
+ <!-- The table rows will be added here by the script -->
+ </table>
+
+ <script>
+    var notes = localStorage.getItem('notes');
+    var quote = localStorage.getItem('quote');
+    var name = localStorage.getItem('name');
+    var date = new Date().toLocaleDateString();
+    var prepValues = JSON.parse(localStorage.getItem('prepValues'));
+    
+    var infoTable = document.getElementById('infoTable');
+    
+    // Create a row for the bartender name
+    var nameRow = document.createElement('tr');
+    infoTable.appendChild(nameRow);
+    
+    // Add the bartender name to the first column
+    var nameTd = document.createElement('td');
+    nameTd.innerHTML = '<span class="bold">Bartender Name:</span> ' + name;
+    nameRow.appendChild(nameTd);
+    
+    // Create a row for the date
+    var dateRow = document.createElement('tr');
+    infoTable.appendChild(dateRow);
+    
+    // Add the date to the first column
+    var dateTd = document.createElement('td');
+    dateTd.innerHTML = '<span class="bold">Date:</span> ' + date;
+    dateRow.appendChild(dateTd);
+    
+    // Create a row for each item in prepValues
+    for (var itemName in prepValues) {
+      var itemTr = document.createElement('tr');
+      infoTable.appendChild(itemTr);
+    
+      // Add the item name and value to the first column
+      var itemLabel = document.createElement('td');
+      itemLabel.innerHTML = '<span class="bold">' + itemName + ':</span> ' + prepValues[itemName];
+      itemTr.appendChild(itemLabel);
+    }
+    
+    // Create a row for the notes
+    var notesRow = document.createElement('tr');
+    infoTable.appendChild(notesRow);
+    
+    // Add the notes to the first column
+    var notesTd = document.createElement('td');
+    notesTd.innerHTML = '<span class="bold">Notes:</span> ' + notes;
+    notesRow.appendChild(notesTd);
+    
+    // Create a row for the quote
+    var quoteRow = document.createElement('tr');
+    infoTable.appendChild(quoteRow);
+    
+    // Add the quote to the first column
+    var quoteTd = document.createElement('td');
+    quoteTd.innerHTML = '<span class="bold">Inspirational Quote:</span> ' + quote;
+    quoteRow.appendChild(quoteTd);
+</script>
+   
+ 
+
+ <p>Make Sure You Screenshot This And Post It In The Groupchat</p>
+ <button id="homeButton" onclick="window.location.href='index.html';">Home</button> <!-- changed id -->
+ </body>
+</html>
